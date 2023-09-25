@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Recordings</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous"/>
+    </head>
+    
+    <body>
+        <div class="container" style="max-width: 1000px;">
+            <nav class="navbar navbar-expand-lg">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="{% url 'camera_view' %}">Camera View</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'recordings' %}">Recordings</a>
+                        <a class="nav-link" href="{% url 'edit_account' %}">Edit Account</a>
+                    </div>
+                </div>
+            </nav>
+            <h1>Recordings</h1>          
+            {% for x in recording %}
+            <div class="card" style="margin: 0 0 2em;">
+                <div class="card-header">
+                    <p class="card-text">{{x.date}}</p>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <video class="embed-responsive" controls="controls" style="max-width: 100%">
+                            <source src="{{x.file.url}}" type="video/mp4"/>
+                        </video>
+                    </div>
+                    <div class="col-5">
+                        <div class="card-body">
+                        <h5 class="card-title">{{x.time}}</h5>
+                        <p class="card-text">{{x.description}}</p>
+                        <a href="{% url 'delete_recording' id=x.id %}" class="btn btn-danger" style="position: absolute; right: 1em; bottom: 1em">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
